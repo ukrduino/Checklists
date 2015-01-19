@@ -15,30 +15,33 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
     
     
     required init(coder aDecoder: NSCoder) {
-        // наполняем его тестовыми записями
         items = [ChecklistItem]()
-        let row0item = ChecklistItem()
-        row0item.text = "Walk the dog"
-        row0item.checked = false
-        items.append(row0item)
-        let row1item = ChecklistItem()
-        row1item.text = "Brush my teeth"
-        row1item.checked = true
-        items.append(row1item)
-        let row2item = ChecklistItem()
-        row2item.text = "Learn iOS development"
-        row2item.checked = true
-        items.append(row2item)
-        let row3item = ChecklistItem()
-        row3item.text = "Soccer practice"
-        row3item.checked = false
-        items.append(row3item)
-        let row4item = ChecklistItem()
-        row4item.text = "Eat ice cream"
-        row4item.checked = true
-        items.append(row4item)
+        // наполняем его тестовыми записями
+//        let row0item = ChecklistItem()
+//        row0item.text = "Walk the dog"
+//        row0item.checked = false
+//        items.append(row0item)
+//        let row1item = ChecklistItem()
+//        row1item.text = "Brush my teeth"
+//        row1item.checked = true
+//        items.append(row1item)
+//        let row2item = ChecklistItem()
+//        row2item.text = "Learn iOS development"
+//        row2item.checked = true
+//        items.append(row2item)
+//        let row3item = ChecklistItem()
+//        row3item.text = "Soccer practice"
+//        row3item.checked = false
+//        items.append(row3item)
+//        let row4item = ChecklistItem()
+//        row4item.text = "Eat ice cream"
+//        row4item.checked = true
+//        items.append(row4item)
         
         super.init(coder: aDecoder)
+        loadChecklistItems()
+        println("Documents folder is \(documentsDirectory())")
+        println("Data file path is \(dataFilePath())")
     }
     
     override func viewDidLoad() {
@@ -109,7 +112,8 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
             }
             
             // снимаем выделение с ячейки
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        saveChecklistItems()
     }
 
 // метод удаления записи
@@ -121,6 +125,7 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
             let indexPaths = [indexPath]
             tableView.deleteRowsAtIndexPaths(indexPaths,
                 withRowAnimation: .Automatic)
+            saveChecklistItems()
         }
     
     func itemDetailViewControllerDidCancel(controller: ItemDetailViewController) {
@@ -130,11 +135,11 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
     }
 // добавляем запись
     func itemDetailViewController(controller: ItemDetailViewController,
-            didFinishAddingItem item: ChecklistItem) {
-            items.append(item)
-            
-            
-            dismissViewControllerAnimated(true, completion: nil)
+                    didFinishAddingItem item: ChecklistItem) {
+        items.append(item)
+        
+        saveChecklistItems()
+        dismissViewControllerAnimated(true, completion: nil)
     }
 // редактируем запись
     func itemDetailViewController(controller: ItemDetailViewController,
@@ -149,6 +154,7 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
                 configureTextForCell(cell, withChecklistItem: item)
             }
         }
+        saveChecklistItems()
         dismissViewControllerAnimated(true, completion: nil)
     }
 // передача данных при переходе на другой контроллер
@@ -176,6 +182,58 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
             // передаем в свойство itemToEdit ItemDetailViewController
             if let indexPath = tableView.indexPathForCell(sender as UITableViewCell) {
                 controller.itemToEdit = items[indexPath.row]
+            }
+        }
+    }
+// сохранение данных
+    // построение пути к дериктории DocumentDirectory
+    func documentsDirectory() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(
+        .DocumentDirectory, .UserDomainMask, true) as [String]
+        return paths[0]
+    }
+    // построение пути к файлу Checklists.plist
+    func dataFilePath() -> String {
+        return documentsDirectory().stringByAppendingPathComponent(
+        "Checklists.plist")
+    }
+// варианты потсроения пути к файлу
+//    func dataFilePath() -> String {
+//            let directory = documentsDirectory()
+//            return directory.stringByAppendingPathComponent("Checklists.plist")
+//    }
+//    func dataFilePath() -> String {
+//            return "\(documentsDirectory())/Checklists.plist"
+//    }
+    
+    func saveChecklistItems() {
+            let data = NSMutableData()
+        
+//        NSKeyedArchiver, which is a form of NSCoder that creates plist files, encodes the
+//        array and all the ChecklistItems in it into some sort of binary data format that
+//        can be written to a file.
+//        That data is placed in an NSMutableData object, which will write itself to the file
+//        specified by dataFilePath.
+        
+            let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+            archiver.encodeObject(items, forKey: "ChecklistItems")
+            archiver.finishEncoding()
+            data.writeToFile(dataFilePath(), atomically: true)
+    }
+    
+    func loadChecklistItems() {
+        // Путь к файлу с сохраненными данными Checklists.plist
+        let path = dataFilePath()
+        // Если такой файл есть...
+        if NSFileManager.defaultManager().fileExistsAtPath(path) {
+            //  то....
+            // получаем бинарные данные из файла
+            if let data = NSData(contentsOfFile: path){
+                // создаем распаковщик для данных
+                let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+                // распаковываем с помощью NSKeyedUnarchiver в items
+                items = unarchiver.decodeObjectForKey("ChecklistItems") as [ChecklistItem]
+                unarchiver.finishDecoding()
             }
         }
     }
