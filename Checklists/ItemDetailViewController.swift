@@ -63,7 +63,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     //Проверяет введено ли что-то в поле для ввода и потом делает кнопку DoneBarButton активной
     func textField(textField: UITextField,
         shouldChangeCharactersInRange range: NSRange,
-        replacementString string: String) -> Bool {
+                    replacementString string: String) -> Bool {
         let oldText: NSString = textField.text
         let newText: NSString = oldText.stringByReplacingCharactersInRange(
         range, withString: string)
