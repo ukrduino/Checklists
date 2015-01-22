@@ -6,31 +6,45 @@
 //  Copyright (c) 2015 Sergey Romaniuk. All rights reserved.
 //
 
+
+
 import UIKit
 
+// стартовый экран на котором представлен список всех чеклистов
 class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate{
     
+    var dataModel: DataModel!
     
-    var lists: [Checklist]
-    
-    required init(coder aDecoder: NSCoder) {
-        // Put values into your instance variables and constants.
-        // 1
-        lists = [Checklist]()
-        // 2
-        super.init(coder: aDecoder)
-        
-        // Other initialization code, such as calling methods, goes here.
-       
-        var list = Checklist(name: "Birthdays")
-        lists.append(list)
-        list = Checklist(name: "Groceries")
-        lists.append(list)
-        list = Checklist(name: "Cool Apps")
-        lists.append(list)
-        list = Checklist(name: "To Do")
-        lists.append(list)
-    }
+//    required init(coder aDecoder: NSCoder) {
+//        // Put values into your instance variables and constants.
+//        // инициализируем пустой массив
+//        lists = [Checklist]()
+//        // 2
+//        super.init(coder: aDecoder)
+//        
+//        // Other initialization code, such as calling methods, goes here.
+//        loadChecklists()
+//        
+//// автозаполнение массива
+////        var list = Checklist(name: "Birthdays")
+////        lists.append(list)
+////        list = Checklist(name: "Groceries")
+////        lists.append(list)
+////        list = Checklist(name: "Cool Apps")
+////        lists.append(list)
+////        list = Checklist(name: "To Do")
+////        lists.append(list)
+////        for list in lists {
+////            if let index = find(lists, list) {
+////                var ii : Int = index+1
+////                    for r in 1...ii {
+////                        let item = ChecklistItem()
+////                        item.text = "Item № \(r) for \(list.name)"
+////                        list.items.append(item)
+////                }
+////            }
+////        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,13 +66,13 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return lists.count
+        return dataModel.lists.count
     }
     
     override func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "Cell"
-        let checklist = lists[indexPath.row]
+        let checklist = dataModel.lists[indexPath.row]
         var cell: UITableViewCell! = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? UITableViewCell
         if cell == nil {cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
         }
@@ -69,7 +83,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     override func tableView(tableView: UITableView,
             didSelectRowAtIndexPath indexPath: NSIndexPath) {
-            let checklist = lists[indexPath.row]
+            let checklist = dataModel.lists[indexPath.row]
             performSegueWithIdentifier("ShowChecklist", sender: checklist)
     }
     
@@ -95,13 +109,13 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     func listDetailViewController(controller: ListDetailViewController,
         didFinishAddingChecklist checklist: Checklist) {
-           lists.append(checklist)
+           dataModel.lists.append(checklist)
            tableView.reloadData()
            dismissViewControllerAnimated(true, completion: nil)
     }
     func listDetailViewController(controller: ListDetailViewController,
         didFinishEditingChecklist checklist: Checklist) {
-            if let index = find(lists, checklist) {
+            if let index = find(dataModel.lists, checklist) {
                 let indexPath = NSIndexPath(forRow: index, inSection: 0)
                 if let cell = tableView.cellForRowAtIndexPath(indexPath) {
                     cell.textLabel!.text = checklist.name
@@ -112,7 +126,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     override func tableView(tableView: UITableView,
       commitEditingStyle editingStyle: UITableViewCellEditingStyle,
           forRowAtIndexPath indexPath: NSIndexPath) {
-            lists.removeAtIndex(indexPath.row)
+            dataModel.lists.removeAtIndex(indexPath.row)
             let indexPaths = [indexPath]
             tableView.deleteRowsAtIndexPaths(indexPaths,
             withRowAnimation: .Automatic)
@@ -123,10 +137,10 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             let navigationController = storyboard!.instantiateViewControllerWithIdentifier("ListNavigationController") as UINavigationController
             let controller = navigationController.topViewController as ListDetailViewController
             controller.delegate = self
-            let checklist = lists[indexPath.row]
+            let checklist = dataModel.lists[indexPath.row]
             controller.checklistToEdit = checklist
             presentViewController(navigationController, animated: true,
             completion: nil)
     }
-
+    
 }

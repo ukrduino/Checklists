@@ -21,9 +21,7 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
         items = [ChecklistItem]()
         
         super.init(coder: aDecoder)
-        loadChecklistItems()
-        println("Documents folder is \(documentsDirectory())")
-        println("Data file path is \(dataFilePath())")
+
     }
     
     override func viewDidLoad() {
@@ -39,11 +37,10 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
 
 
 // количество строк в таблице...
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
          // как количество записей в массиве
-        return items.count
+        return checklist.items.count
         
     }
 
@@ -53,7 +50,7 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
         let cell = tableView.dequeueReusableCellWithIdentifier("ChecklistItem") as UITableViewCell
 
         // получаем запись из массива с номером равным indexPath.row запрашиваемой ячейки
-        let item = items[indexPath.row]
+        let item = checklist.items[indexPath.row]
         // пишем текст в ячейку
         configureTextForCell(cell, withChecklistItem: item)
         // проставляем чекмарк
@@ -87,7 +84,7 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
         // получаем ячейку по indexPath-у
         if let cell = tableView.cellForRowAtIndexPath(indexPath) {
             // получаем объект из массива по indexPath.row
-            let item = items[indexPath.row]
+            let item = checklist.items[indexPath.row]
                 // вызываем метод объекта toggleChecked()
                 item.toggleChecked()
                 // обновляем таблицу
@@ -96,39 +93,41 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
             
             // снимаем выделение с ячейки
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        saveChecklistItems()
+ 
     }
 
 // метод удаления записи
     override func tableView(tableView: UITableView,
         commitEditingStyle editingStyle: UITableViewCellEditingStyle,
         forRowAtIndexPath indexPath: NSIndexPath) {
-            items.removeAtIndex(indexPath.row)
+            checklist.items.removeAtIndex(indexPath.row)
 // красиво удаляет строчку
             let indexPaths = [indexPath]
             tableView.deleteRowsAtIndexPaths(indexPaths,
                 withRowAnimation: .Automatic)
-            saveChecklistItems()
+ 
         }
-    
+//Cancel
     func itemDetailViewControllerDidCancel(controller: ItemDetailViewController) {
  
         dismissViewControllerAnimated(true, completion: nil)
         
     }
+    
 // добавляем запись
     func itemDetailViewController(controller: ItemDetailViewController,
                     didFinishAddingItem item: ChecklistItem) {
-        items.append(item)
+        checklist.items.append(item)
         
-        saveChecklistItems()
+ 
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
 // редактируем запись
     func itemDetailViewController(controller: ItemDetailViewController,
                 didFinishEditingItem item: ChecklistItem) {
         // по объекту находим его индекс в массиве
-        if let index = find(items, item) { // Returns the first index where `value` appears in `domain`
+        if let index = find(checklist.items, item) { // Returns the first index where `value` appears in `domain`
             // создаем indexPath с номером ряда соответствующим индексу объекта массиве
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             // оплучаем ячейку по данному indexPath-у
@@ -137,11 +136,11 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
                 configureTextForCell(cell, withChecklistItem: item)
             }
         }
-        saveChecklistItems()
         dismissViewControllerAnimated(true, completion: nil)
     }
-// передача данных при переходе на другой контроллер
     
+
+// передача данных при переходе на другой контроллер
     override func prepareForSegue(segue: UIStoryboardSegue,
                                  sender: AnyObject!) {
         // ищем переход по идентификатору
@@ -164,60 +163,9 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
             // если его получаем то выбираем в массиве items запись с номером indexPath.row и 
             // передаем в свойство itemToEdit ItemDetailViewController
             if let indexPath = tableView.indexPathForCell(sender as UITableViewCell) {
-                controller.itemToEdit = items[indexPath.row]
+                controller.itemToEdit = checklist.items[indexPath.row]
             }
         }
     }
-// сохранение данных
-    // построение пути к дериктории DocumentDirectory
-    func documentsDirectory() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(
-        .DocumentDirectory, .UserDomainMask, true) as [String]
-        return paths[0]
-    }
-    // построение пути к файлу Checklists.plist
-    func dataFilePath() -> String {
-        return documentsDirectory().stringByAppendingPathComponent(
-        "Checklists.plist")
-    }
-// варианты потсроения пути к файлу
-//    func dataFilePath() -> String {
-//            let directory = documentsDirectory()
-//            return directory.stringByAppendingPathComponent("Checklists.plist")
-//    }
-//    func dataFilePath() -> String {
-//            return "\(documentsDirectory())/Checklists.plist"
-//    }
-    
-    func saveChecklistItems() {
-            let data = NSMutableData()
-        
-//        NSKeyedArchiver, which is a form of NSCoder that creates plist files, encodes the
-//        array and all the ChecklistItems in it into some sort of binary data format that
-//        can be written to a file.
-//        That data is placed in an NSMutableData object, which will write itself to the file
-//        specified by dataFilePath.
-        
-            let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
-            archiver.encodeObject(items, forKey: "ChecklistItems")
-            archiver.finishEncoding()
-            data.writeToFile(dataFilePath(), atomically: true)
-    }
-    
-    func loadChecklistItems() {
-        // Путь к файлу с сохраненными данными Checklists.plist
-        let path = dataFilePath()
-        // Если такой файл есть...
-        if NSFileManager.defaultManager().fileExistsAtPath(path) {
-            //  то....
-            // получаем бинарные данные из файла
-            if let data = NSData(contentsOfFile: path){
-                // создаем распаковщик для данных
-                let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
-                // распаковываем с помощью NSKeyedUnarchiver в items
-                items = unarchiver.decodeObjectForKey("ChecklistItems") as [ChecklistItem]
-                unarchiver.finishDecoding()
-            }
-        }
-    }
+
 }
