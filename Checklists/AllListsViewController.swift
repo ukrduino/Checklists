@@ -11,7 +11,7 @@
 import UIKit
 
 // стартовый экран на котором представлен список всех чеклистов
-class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate{
+class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate{
     
     var dataModel: DataModel!
     
@@ -60,8 +60,17 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.delegate = self
+        let index = dataModel.indexOfSelectedChecklist
+            if index >= 0 && index < dataModel.lists.count {
+                let checklist = dataModel.lists[index]
+                performSegueWithIdentifier("ShowChecklist", sender: checklist)
+            }
+        tableView.reloadData()
+    }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
@@ -74,18 +83,45 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let cellIdentifier = "Cell"
         let checklist = dataModel.lists[indexPath.row]
         var cell: UITableViewCell! = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? UITableViewCell
-        if cell == nil {cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
+        if cell == nil {cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellIdentifier)
         }
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .DetailDisclosureButton
+        let itemsCount = checklist.items.count
+            if itemsCount == 0 {
+                cell.detailTextLabel!.text = "Empty list 😕"
+            }
+            else{
+                let countRemaining = checklist.countUncheckedItems()
+                if countRemaining == 0 {
+                    cell.detailTextLabel!.text = "All Done! 😃"
+                }
+                else{
+                    cell.detailTextLabel!.text = "\(countRemaining) Remaining"
+                }
+            }
         return cell
     }
+
     
     override func tableView(tableView: UITableView,
-            didSelectRowAtIndexPath indexPath: NSIndexPath) {
-            let checklist = dataModel.lists[indexPath.row]
-            performSegueWithIdentifier("ShowChecklist", sender: checklist)
+        didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        dataModel.indexOfSelectedChecklist = indexPath.row
+        let checklist = dataModel.lists[indexPath.row]
+        performSegueWithIdentifier("ShowChecklist", sender: checklist)
+            
+            
     }
+    
+    func navigationController(navigationController: UINavigationController,
+                willShowViewController viewController: UIViewController,
+                animated: Bool) {
+        if viewController === self {
+            dataModel.indexOfSelectedChecklist = -1
+        }
+    }
+    
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue,
         sender: AnyObject!) {
