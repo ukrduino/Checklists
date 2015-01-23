@@ -7,6 +7,12 @@
 //
 
 import Foundation
+// Хранит чеклисты,
+// Сохраняет чеклисты,
+// Устанавливает дефолтные значения для ключей UserDefaults
+// Получает и меняет данные в UserDefaults по ключу
+// Создает тестовый чеклист при первом запуске
+// Сортирует чеклисты
 
 class DataModel {
     var lists = [Checklist]()
@@ -67,32 +73,40 @@ class DataModel {
             // распаковываем с помощью NSKeyedUnarchiver в items
             lists = unarchiver.decodeObjectForKey("Checklists") as [Checklist]
             unarchiver.finishDecoding()
-            }
+            } // сортируем чеклисты
+            sortChecklists()
         }
     }
-    
+// Устанавливает дефолтные значения (при первой загрузке) в NSUserDefaults
     func registerDefaults() {
                 let dictionary = [ "ChecklistIndex": -1,
                                         "FirstTime": true]
                 NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
     }
     
+// метод сохранения индекса чек листа на котором закрыто приложение для открытия на нем при следующем запуске приложения. Оформлен в виде get/set т.е. indexOfSelectedChecklist() - получает индекс (get), а indexOfSelectedChecklist(1) устанавливает (set) индекс равный 1.
     var indexOfSelectedChecklist: Int {
         get {return NSUserDefaults.standardUserDefaults().integerForKey("ChecklistIndex")}
         set {NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "ChecklistIndex")
              NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
-    
+// Проверка если приложение запущено в первый раз
     func handleFirstTime() {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let firstTime = userDefaults.boolForKey("FirstTime")
-        if firstTime {
-            let checklist = Checklist(name: "List")
+        if firstTime { // если стоит флаг что запущено в первый раз то...
+            let checklist = Checklist(name: "List") // создаем пустой список с названием  List
             lists.append(checklist)
-            indexOfSelectedChecklist = 0
-            userDefaults.setBool(false, forKey: "FirstTime")
+            indexOfSelectedChecklist = 0 // и переходим на него
+            userDefaults.setBool(false, forKey: "FirstTime") // снимаем флаг что запущено в первый раз
         }
+    }
+// Сортировка чек листов по названию(Хер его знает как работает....)
+    func sortChecklists() {
+        lists.sort({ checklist1, checklist2 in return
+        checklist1.name.localizedStandardCompare(checklist2.name) ==
+        NSComparisonResult.OrderedAscending })
     }
     
 }

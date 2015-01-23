@@ -12,27 +12,31 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let dataModel = DataModel()
+// инициализируем класс DataModel
     
-    func saveData() {
-        
+    let dataModel = DataModel()
+
+// получая уведомления что приложение будет переведено в фон режим или при его терминации сохраняет данные
+
+// приложение будет прекращено
+    func applicationWillTerminate(application: UIApplication) {
         dataModel.saveChecklists()
-        
-//        let navigationController = window!.rootViewController
-//        as UINavigationController
-//        let controller = navigationController.viewControllers[0]
-//        as AllListsViewController
-//        controller.dataModel.saveChecklists()
+
+    }
+    
+// приложение будет переведено в фоновый режим
+    func applicationDidEnterBackground(application: UIApplication) {
+        dataModel.saveChecklists()
+
     }
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-    
-        let navigationController = window!.rootViewController
-        as UINavigationController
+// при запуске приложения передаем в AllListsViewController  ссылку на инициализированный экз класса dataModel
+        let navigationController = window!.rootViewController as UINavigationController
         let controller = navigationController.viewControllers[0] as AllListsViewController
-        controller.dataModel = dataModel    
+        controller.dataModel = dataModel
         return true
     }
 
@@ -41,10 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
-        saveData()
-        println("saveData() func applicationDidEnterBackground")
-    }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
@@ -53,12 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
-
-    func applicationWillTerminate(application: UIApplication) {
-        saveData()
-        println("saveData() func applicationWillTerminate")
-    }
-
+    
 
 }
 

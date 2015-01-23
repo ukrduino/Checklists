@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xRM-4t-BMV">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Name of the Checklist-->
@@ -187,6 +188,42 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="xKP-Uz-aET">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="sRa-EX-bn6">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sRa-EX-bn6" id="gqb-ek-M7M">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Icon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jK8-wG-tm8">
+                                                    <rect key="frame" x="8" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cim-a8-JRl">
+                                                    <rect key="frame" x="517" y="4" width="36" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="36" id="2xY-RE-ydQ"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="Ofs-dh-xnk"/>
+                                                        <constraint firstAttribute="height" constant="36" id="Qck-Ol-6nX"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="36" id="b0I-iq-wbb"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Cim-a8-JRl" firstAttribute="top" secondItem="gqb-ek-M7M" secondAttribute="top" constant="4" id="Ofd-lM-LLv"/>
+                                                <constraint firstItem="Cim-a8-JRl" firstAttribute="top" secondItem="gqb-ek-M7M" secondAttribute="topMargin" constant="-4" id="SbU-dB-x9o"/>
+                                                <constraint firstAttribute="trailing" secondItem="Cim-a8-JRl" secondAttribute="trailing" constant="14" id="aOu-fo-mP8"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Cim-a8-JRl" secondAttribute="trailing" constant="285" id="e5e-dX-NLI"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="LYL-2Y-tEw" kind="show" identifier="PickIcon" id="1CB-GZ-Y8j"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="JHt-qI-S33" id="BDJ-Mt-cfL"/>
@@ -207,12 +244,48 @@
                     </navigationItem>
                     <connections>
                         <outlet property="doneBarButton" destination="6vV-Qg-eWJ" id="dOx-0G-SRD"/>
+                        <outlet property="iconImageView" destination="Cim-a8-JRl" id="kIQ-kZ-z6e"/>
                         <outlet property="textField" destination="1zZ-dS-L6n" id="2id-HV-4pp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AJN-bM-wxo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1320" y="1103"/>
+        </scene>
+        <!--Choose Icon-->
+        <scene sceneID="VFy-6Y-5xU">
+            <objects>
+                <tableViewController id="LYL-2Y-tEw" customClass="IconPickerViewController" customModule="Checklists" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Yfe-1P-Aj8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IconCell" textLabel="N2E-hM-gR1" style="IBUITableViewCellStyleDefault" id="9QC-Pd-tEY">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9QC-Pd-tEY" id="wDW-KM-hFH">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="N2E-hM-gR1">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="LYL-2Y-tEw" id="rLx-kc-509"/>
+                            <outlet property="delegate" destination="LYL-2Y-tEw" id="Zuu-hY-UDW"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Choose Icon" id="fe2-aQ-xa7"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="viu-Ck-lTh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2028" y="1103"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tod-7c-WDf">

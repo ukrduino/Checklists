@@ -1,7 +1,12 @@
 import Foundation
 
-// NSObject - для поиска по массиву , NSCoding - для сохранения в файл с NSKeyedArchiver
 
+// Класс Item
+// Сохраняется, восстанавливается
+// Меняет свойство экземпляра checked
+
+
+// NSObject - для поиска по массиву , NSCoding - для сохранения в файл с NSKeyedArchiver
 class ChecklistItem: NSObject, NSCoding{
     var text = ""
     var checked = false

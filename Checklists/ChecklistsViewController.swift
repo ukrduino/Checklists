@@ -8,13 +8,21 @@
 
 import UIKit
 
+
+// Создает/получает массив ChecklistItem для конкретного чеклиста
+// Добавляет и редактирует(название) Item
+// Проставляет чекмарк (сделано) с помощью ChecklistItem.toggleChecked()
+// Удаляет Item
+
+
+
 class ChecklistsViewController: UITableViewController, itemDetailViewControllerDelegate{
     
-    // создаем массив записей типа Checklist
-    
+    // создаваемый/редактируемый чеклист
+    var checklist: Checklist!
+    // его Itemы
     var items: [ChecklistItem]
     
-    var checklist: Checklist!
     
     
     required init(coder aDecoder: NSCoder) {
@@ -23,7 +31,8 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
         super.init(coder: aDecoder)
 
     }
-    
+
+// настройка окна чеклиста (Заголовок)
     override func viewDidLoad() {
         super.viewDidLoad()
         title = checklist.name
@@ -57,7 +66,8 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
         configureCheckmarkForCell(cell, withChecklistItem: item)
         return cell
     }
-// проставляем чекмарк...
+    
+// проставляем чекмарк в (отображение его в таблице)...
     func configureCheckmarkForCell(cell: UITableViewCell,
         withChecklistItem item: ChecklistItem) {
         // в переданной в метод ячейке ищем надпись с Tag(1001)
@@ -96,25 +106,17 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
  
     }
 
-// метод удаления записи
-    override func tableView(tableView: UITableView,
-        commitEditingStyle editingStyle: UITableViewCellEditingStyle,
-        forRowAtIndexPath indexPath: NSIndexPath) {
-            checklist.items.removeAtIndex(indexPath.row)
-// красиво удаляет строчку
-            let indexPaths = [indexPath]
-            tableView.deleteRowsAtIndexPaths(indexPaths,
-                withRowAnimation: .Automatic)
- 
-        }
-//Cancel
+
+// методы делегата itemDetailViewController
+    
+// обработка нажатия на Cancel
     func itemDetailViewControllerDidCancel(controller: ItemDetailViewController) {
  
         dismissViewControllerAnimated(true, completion: nil)
         
     }
     
-// добавляем запись
+// обработка нажатия на Done при создании нового Item
     func itemDetailViewController(controller: ItemDetailViewController,
                     didFinishAddingItem item: ChecklistItem) {
         checklist.items.append(item)
@@ -123,7 +125,7 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-// редактируем запись
+// обработка нажатия на Done при редактировании Itema
     func itemDetailViewController(controller: ItemDetailViewController,
                 didFinishEditingItem item: ChecklistItem) {
         // по объекту находим его индекс в массиве
@@ -139,6 +141,17 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+// удаление записи
+    override func tableView(tableView: UITableView,
+        commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+        forRowAtIndexPath indexPath: NSIndexPath) {
+            checklist.items.removeAtIndex(indexPath.row)
+            // красиво удаляет строчку
+            let indexPaths = [indexPath]
+            tableView.deleteRowsAtIndexPaths(indexPaths,
+                withRowAnimation: .Automatic)
+            
+    }
 
 // передача данных при переходе на другой контроллер
     override func prepareForSegue(segue: UIStoryboardSegue,

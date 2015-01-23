@@ -9,11 +9,14 @@
 import UIKit
 
 
-
+// протокол делегата itemDetailViewController
 protocol itemDetailViewControllerDelegate: class {
+    // обработка нажатия на Cancel    
     func itemDetailViewControllerDidCancel(controller: ItemDetailViewController)
+    // обработка нажатия на Done при создании нового Item    
     func itemDetailViewController(controller: ItemDetailViewController,
         didFinishAddingItem item: ChecklistItem)
+    // обработка нажатия на Done при редактировании Item
     func itemDetailViewController(controller: ItemDetailViewController,
         didFinishEditingItem item: ChecklistItem)
 }
@@ -38,14 +41,18 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             item.text = newItemText.text
             item.checked = false
             delegate?.itemDetailViewController(self, didFinishAddingItem: item)
+             
         }
     }
     
+// для включения/отключения кнопки Done методом который проверяет введено ли что-то в поле для ввода
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    
     @IBOutlet weak var newItemText: UITextField!
 
     weak var delegate: itemDetailViewControllerDelegate?
     
+// подготовка окна (перелючение Add/Edit)
     override func viewDidLoad() {
         super.viewDidLoad()
         if let item = itemToEdit {
@@ -54,13 +61,13 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
-    
-    // отключает выбор ячейки
+// отключает выбор ячейки
     override func tableView(tableView: UITableView,
         willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         return nil
     }
-    //Проверяет введено ли что-то в поле для ввода и потом делает кнопку DoneBarButton активной
+    
+//Проверяет введено ли что-то в поле для ввода и потом делает кнопку DoneBarButton активной
     func textField(textField: UITextField,
         shouldChangeCharactersInRange range: NSRange,
                     replacementString string: String) -> Bool {

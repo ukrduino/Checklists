@@ -8,25 +8,35 @@
 
 import UIKit
 
+// Класс чеклиста
+// Сохраняется, восстанавливается
+// подсчитывает свои несделанные(Unchecked) Items
+
+// NSObject - для поиска по массиву , NSCoding - для сохранения в файл с NSKeyedArchiver
 class Checklist: NSObject, NSCoding {
     var name = ""
     var items: [ChecklistItem] = [ChecklistItem]()
+    var iconName: String
     
     init(name: String) {
         self.name = name
+        iconName = "No Icon"
         super.init()
     }
-    
+// для восстановления объекта
     required init(coder aDecoder: NSCoder) {
         name = aDecoder.decodeObjectForKey("Name") as String
         items = aDecoder.decodeObjectForKey("Items") as [ChecklistItem]
+        iconName = aDecoder.decodeObjectForKey("IconName") as String
         super.init()
     }
+// для сохранения объекта
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(name, forKey: "Name")
         aCoder.encodeObject(items, forKey: "Items")
+        aCoder.encodeObject(iconName, forKey: "IconName")
     }
-    
+// Подсчет несделанных(Unchecked) Items
     func countUncheckedItems() -> Int {
         var count = 0
         for item in items {

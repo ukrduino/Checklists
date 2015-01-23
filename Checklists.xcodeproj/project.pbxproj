@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A57D67131A724E040070BA41 /* IconPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57D67121A724E040070BA41 /* IconPickerViewController.swift */; };
 		A5B0865B1A6F991A006FDC19 /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B0865A1A6F991A006FDC19 /* AllListsViewController.swift */; };
 		A5B0865D1A6FA947006FDC19 /* Checklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B0865C1A6FA947006FDC19 /* Checklist.swift */; };
 		A5B0865F1A6FBF03006FDC19 /* ListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B0865E1A6FBF03006FDC19 /* ListDetailViewController.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A57D67121A724E040070BA41 /* IconPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconPickerViewController.swift; sourceTree = "<group>"; };
 		A5B0865A1A6F991A006FDC19 /* AllListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = "<group>"; };
 		A5B0865C1A6FA947006FDC19 /* Checklist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checklist.swift; sourceTree = "<group>"; };
 		A5B0865E1A6FBF03006FDC19 /* ListDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListDetailViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				A5B171C51A6A8BB200082615 /* ItemDetailViewController.swift */,
 				A5B0865C1A6FA947006FDC19 /* Checklist.swift */,
 				A5B171C11A6A5FF200082615 /* ChecklistItem.swift */,
+				A57D67121A724E040070BA41 /* IconPickerViewController.swift */,
 				A5B171A31A6A489800082615 /* Main.storyboard */,
 				A5B171A61A6A489800082615 /* Images.xcassets */,
 				A5B171A81A6A489800082615 /* LaunchScreen.xib */,
@@ -236,6 +239,7 @@
 				A5B171A01A6A489800082615 /* AppDelegate.swift in Sources */,
 				A5B0865F1A6FBF03006FDC19 /* ListDetailViewController.swift in Sources */,
 				A5B171C61A6A8BB200082615 /* ItemDetailViewController.swift in Sources */,
+				A57D67131A724E040070BA41 /* IconPickerViewController.swift in Sources */,
 				A5B0865D1A6FA947006FDC19 /* Checklist.swift in Sources */,
 				A5B171C21A6A5FF200082615 /* ChecklistItem.swift in Sources */,
 				A5B0865B1A6F991A006FDC19 /* AllListsViewController.swift in Sources */,
