@@ -96,7 +96,7 @@ class DataModel {
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let firstTime = userDefaults.boolForKey("FirstTime")
         if firstTime { // если стоит флаг что запущено в первый раз то...
-            let checklist = Checklist(name: "List") // создаем пустой список с названием  List
+            let checklist = Checklist(name: "List", iconName:"Appointments") // создаем пустой список с названием  List
             lists.append(checklist)
             indexOfSelectedChecklist = 0 // и переходим на него
             userDefaults.setBool(false, forKey: "FirstTime") // снимаем флаг что запущено в первый раз

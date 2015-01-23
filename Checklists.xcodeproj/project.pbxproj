@@ -19,7 +19,6 @@
 		A5B171C01A6A49F400082615 /* ChecklistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B171BF1A6A49F400082615 /* ChecklistsViewController.swift */; };
 		A5B171C21A6A5FF200082615 /* ChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B171C11A6A5FF200082615 /* ChecklistItem.swift */; };
 		A5B171C61A6A8BB200082615 /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B171C51A6A8BB200082615 /* ItemDetailViewController.swift */; };
-		A5DE65B91A7117D900FC7AAD /* TempArchiv.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DE65B81A7117D900FC7AAD /* TempArchiv.swift */; };
 		A5DE65BB1A71264200FC7AAD /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DE65BA1A71264200FC7AAD /* DataModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +49,6 @@
 		A5B171BF1A6A49F400082615 /* ChecklistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ChecklistsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A5B171C11A6A5FF200082615 /* ChecklistItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistItem.swift; sourceTree = "<group>"; };
 		A5B171C51A6A8BB200082615 /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ItemDetailViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		A5DE65B81A7117D900FC7AAD /* TempArchiv.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempArchiv.swift; sourceTree = "<group>"; };
 		A5DE65BA1A71264200FC7AAD /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,7 +104,6 @@
 				A5B171A61A6A489800082615 /* Images.xcassets */,
 				A5B171A81A6A489800082615 /* LaunchScreen.xib */,
 				A5B1719D1A6A489800082615 /* Supporting Files */,
-				A5DE65B81A7117D900FC7AAD /* TempArchiv.swift */,
 			);
 			path = Checklists;
 			sourceTree = "<group>";
@@ -243,7 +240,6 @@
 				A5B0865D1A6FA947006FDC19 /* Checklist.swift in Sources */,
 				A5B171C21A6A5FF200082615 /* ChecklistItem.swift in Sources */,
 				A5B0865B1A6F991A006FDC19 /* AllListsViewController.swift in Sources */,
-				A5DE65B91A7117D900FC7AAD /* TempArchiv.swift in Sources */,
 				A5B171C01A6A49F400082615 /* ChecklistsViewController.swift in Sources */,
 				A5DE65BB1A71264200FC7AAD /* DataModel.swift in Sources */,
 			);

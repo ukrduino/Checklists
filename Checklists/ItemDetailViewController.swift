@@ -37,9 +37,8 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             delegate?.itemDetailViewController(self, didFinishEditingItem: item)
         }
         else {
-            let item = ChecklistItem()
-            item.text = newItemText.text
-            item.checked = false
+            let item = ChecklistItem(name: newItemText.text)
+            // можно добавить на ItemDetailViewController чекмарк и при создании его отмечать
             delegate?.itemDetailViewController(self, didFinishAddingItem: item)
              
         }

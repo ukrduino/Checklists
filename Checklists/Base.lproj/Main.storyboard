@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xRM-4t-BMV">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Name of the Checklist-->
@@ -202,20 +201,16 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cim-a8-JRl">
-                                                    <rect key="frame" x="517" y="4" width="36" height="36"/>
+                                                    <rect key="frame" x="508" y="4" width="36" height="36"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="36" id="2xY-RE-ydQ"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="Ofs-dh-xnk"/>
-                                                        <constraint firstAttribute="height" constant="36" id="Qck-Ol-6nX"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="36" id="b0I-iq-wbb"/>
+                                                        <constraint firstAttribute="width" constant="36" id="1sr-zn-4uc"/>
+                                                        <constraint firstAttribute="height" constant="36" id="jYo-Ps-0Iy"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Cim-a8-JRl" firstAttribute="top" secondItem="gqb-ek-M7M" secondAttribute="top" constant="4" id="Ofd-lM-LLv"/>
-                                                <constraint firstItem="Cim-a8-JRl" firstAttribute="top" secondItem="gqb-ek-M7M" secondAttribute="topMargin" constant="-4" id="SbU-dB-x9o"/>
-                                                <constraint firstAttribute="trailing" secondItem="Cim-a8-JRl" secondAttribute="trailing" constant="14" id="aOu-fo-mP8"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Cim-a8-JRl" secondAttribute="trailing" constant="285" id="e5e-dX-NLI"/>
+                                                <constraint firstItem="Cim-a8-JRl" firstAttribute="top" secondItem="gqb-ek-M7M" secondAttribute="top" constant="4" id="YZM-t6-EHM"/>
+                                                <constraint firstAttribute="trailing" secondItem="Cim-a8-JRl" secondAttribute="trailing" constant="23" id="xae-7V-5M7"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -325,4 +320,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="4N3-QC-1vl"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.045829332830797931" green="0.40764518477932643" blue="0.96221514745308312" alpha="1" colorSpace="calibratedRGB"/>
 </document>
