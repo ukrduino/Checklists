@@ -36,6 +36,7 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
     override func viewDidLoad() {
         super.viewDidLoad()
         title = checklist.name
+        tableView.rowHeight = 44
 
     }
 
@@ -72,6 +73,7 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
         withChecklistItem item: ChecklistItem) {
         // в переданной в метод ячейке ищем надпись с Tag(1001)
         let label = cell.viewWithTag(1001) as UILabel
+            label.textColor = view.tintColor
         // а в переданном в метод объекте смотрим поле checked и если оно true то...
         if item.checked {
             label.text = "✓"

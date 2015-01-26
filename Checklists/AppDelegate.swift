@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dataModel.saveChecklists()
 
     }
+    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -37,7 +38,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = window!.rootViewController as UINavigationController
         let controller = navigationController.viewControllers[0] as AllListsViewController
         controller.dataModel = dataModel
+        
+// при первом запуске приложения спрашиваем пользователя, можно ли приложению делать local notifications???
+        let notificationSettings = UIUserNotificationSettings(forTypes: .Alert | .Sound, categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        
+//// пример.... нотифика
+//        let date = NSDate(timeIntervalSinceNow: 10)
+//        let localNotification = UILocalNotification()
+//        localNotification.fireDate = date
+//        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+//        localNotification.alertBody = "I am a local notification!"
+//        localNotification.soundName = UILocalNotificationDefaultSoundName // Звука нет почему-то....
+//        UIApplication.sharedApplication().scheduleLocalNotification(
+//            localNotification)
+        
         return true
+    }
+    
+// просмотр local notification в Консоли...
+    func application(application: UIApplication,
+            didReceiveLocalNotification notification: UILocalNotification) {
+            println("didReceiveLocalNotification \(notification)")
     }
 
     func applicationWillResignActive(application: UIApplication) {

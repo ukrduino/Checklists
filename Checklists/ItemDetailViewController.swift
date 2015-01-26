@@ -58,6 +58,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             title = "Edit Item"
             newItemText.text = item.text
         }
+        tableView.rowHeight = 44
     }
     
 // отключает выбор ячейки

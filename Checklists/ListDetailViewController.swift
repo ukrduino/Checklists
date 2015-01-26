@@ -36,7 +36,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, Icon
     
     var checklistToEdit: Checklist?
     
-    var iconName = "Folder"
+    var iconName = "No Icon"
     
     @IBAction func cancel() {
         delegate?.listDetailViewControllerDidCancel(self)
@@ -50,7 +50,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, Icon
             didFinishEditingChecklist: checklist)
         }
         else {
-            let checklist = Checklist(name: textField.text)
+            let checklist = Checklist(name: textField.text, iconName: iconName)
             delegate?.listDetailViewController(self, didFinishAddingChecklist: checklist)
         }
     }
@@ -66,6 +66,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, Icon
         
         }
         iconImageView.image = UIImage(named: iconName)
+        tableView.rowHeight = 44
     }
     
 // активизация поля для ввода текста
