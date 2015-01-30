@@ -58,15 +58,34 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // переиспользовать ячейки с Identifier("ChecklistItem")
         let cell = tableView.dequeueReusableCellWithIdentifier("ChecklistItem") as UITableViewCell
-
         // получаем запись из массива с номером равным indexPath.row запрашиваемой ячейки
         let item = checklist.items[indexPath.row]
         // пишем текст в ячейку
         configureTextForCell(cell, withChecklistItem: item)
         // проставляем чекмарк
         configureCheckmarkForCell(cell, withChecklistItem: item)
+        configureDueDateLabelSmallForCell(cell, withChecklistItem: item)
         return cell
     }
+// проставляем Due Date
+    func configureDueDateLabelSmallForCell(cell: UITableViewCell,
+        withChecklistItem item: ChecklistItem) {
+        // в переданной в метод ячейке ищем надпись с Tag(1002)
+        let label = cell.viewWithTag(1002) as UILabel
+        if item.dueDate.compare(NSDate()) != NSComparisonResult.OrderedAscending {
+            label.textColor = view.tintColor
+        } else {
+            label.textColor = UIColor.redColor()
+            }
+        // а в переданном в метод объекте смотрим поле checked и если оно true то...
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .MediumStyle
+        formatter.timeStyle = .ShortStyle
+        label.text = formatter.stringFromDate(item.dueDate)
+    }
+    
+    
+    
     
 // проставляем чекмарк в (отображение его в таблице)...
     func configureCheckmarkForCell(cell: UITableViewCell,

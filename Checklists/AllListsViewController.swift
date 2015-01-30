@@ -53,7 +53,8 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let cellIdentifier = "Cell"
         let checklist = dataModel.lists[indexPath.row]
         var cell: UITableViewCell! = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? UITableViewCell
-        if cell == nil {cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellIdentifier)
+        if cell == nil {
+            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellIdentifier)
         }
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .DetailDisclosureButton

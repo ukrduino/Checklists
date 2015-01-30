@@ -40,8 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         controller.dataModel = dataModel
         
 // при первом запуске приложения спрашиваем пользователя, можно ли приложению делать local notifications???
-        let notificationSettings = UIUserNotificationSettings(forTypes: .Alert | .Sound, categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+//        let notificationSettings = UIUserNotificationSettings(forTypes: .Alert | .Sound, categories: nil)
+//        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
         
 //// пример.... нотифика
 //        let date = NSDate(timeIntervalSinceNow: 10)

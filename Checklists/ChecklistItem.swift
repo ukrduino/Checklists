@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 
 // Класс Item
@@ -28,6 +29,15 @@ class ChecklistItem: NSObject, NSCoding{
             println(itemID)
             super.init()
     }
+// удаляем уведомление при удалении объекта
+    deinit {
+        let existingNotification = notificationForThisItem()
+        if let notification = existingNotification {
+            println("Removing existing notification \(notification)")
+            UIApplication.sharedApplication().cancelLocalNotification(notification)
+        }
+    }
+    
     
 // переключение чекмарка
     func toggleChecked() {
@@ -53,6 +63,35 @@ class ChecklistItem: NSObject, NSCoding{
         super.init()
     }
     
+    func scheduleNotification() {
+        let existingNotification = notificationForThisItem()
+        if let notification = existingNotification {
+            println("Removing existing notification \(notification)")
+            UIApplication.sharedApplication().cancelLocalNotification(notification)
+        }
+        if shouldRemind && dueDate.compare(NSDate()) != NSComparisonResult.OrderedAscending {
+            let localNotification = UILocalNotification()
+            localNotification.fireDate = dueDate
+            localNotification.timeZone = NSTimeZone.defaultTimeZone()
+            localNotification.alertBody = text
+            localNotification.soundName = UILocalNotificationDefaultSoundName
+            localNotification.userInfo = ["ItemID": itemID]
+            UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+            println("Scheduled notification \(localNotification) for itemID \(itemID)")
+        }
+    }
+    
+    func notificationForThisItem() -> UILocalNotification? {
+        let allNotifications = UIApplication.sharedApplication().scheduledLocalNotifications as [UILocalNotification]
+        for notification in allNotifications {
+            if let number = notification.userInfo?["ItemID"] as? NSNumber {
+                if number.integerValue == itemID {
+                return notification
+                }
+            }
+        }
+        return nil
+    }
 }
 
 
