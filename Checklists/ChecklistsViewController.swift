@@ -81,7 +81,7 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
         let formatter = NSDateFormatter()
         formatter.dateStyle = .MediumStyle
         formatter.timeStyle = .ShortStyle
-        label.text = formatter.stringFromDate(item.dueDate)
+        label.text = "Due date : \(formatter.stringFromDate(item.dueDate))"
     }
     
     
@@ -141,7 +141,8 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
     func itemDetailViewController(controller: ItemDetailViewController,
                     didFinishAddingItem item: ChecklistItem) {
         checklist.items.append(item)
-        
+        checklist.sortChecklistItems()
+        tableView.reloadData()      
  
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -157,6 +158,10 @@ class ChecklistsViewController: UITableViewController, itemDetailViewControllerD
             if let cell = tableView.cellForRowAtIndexPath(indexPath) {
                 // меняем текст в ячейке используя метод как при первом создании ячейки
                 configureTextForCell(cell, withChecklistItem: item)
+                configureDueDateLabelSmallForCell(cell, withChecklistItem: item)
+                checklist.sortChecklistItems()
+                tableView.reloadData()
+
             }
         }
         dismissViewControllerAnimated(true, completion: nil)

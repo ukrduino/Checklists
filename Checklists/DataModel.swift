@@ -30,6 +30,7 @@ class DataModel {
         .DocumentDirectory, .UserDomainMask, true) as [String]
         return paths[0]
     }
+    
     // построение пути к файлу Checklists.plist
     func dataFilePath() -> String {
             return documentsDirectory().stringByAppendingPathComponent(
@@ -59,6 +60,7 @@ class DataModel {
         archiver.finishEncoding()
         data.writeToFile(dataFilePath(), atomically: true)
     }
+    
     // восстановление данных Чеклистов
     func loadChecklists() {
         // Путь к файлу с сохраненными данными Checklists.plist
@@ -75,8 +77,10 @@ class DataModel {
             unarchiver.finishDecoding()
             } // сортируем чеклисты
             sortChecklists()
+ 
         }
     }
+    
 // Устанавливает дефолтные значения (при первой загрузке) в NSUserDefaults
     func registerDefaults() {
                 let dictionary = [ "ChecklistIndex": -1,
@@ -92,6 +96,7 @@ class DataModel {
              NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
+    
 // Проверка если приложение запущено в первый раз
     func handleFirstTime() {
         let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -103,12 +108,14 @@ class DataModel {
             userDefaults.setBool(false, forKey: "FirstTime") // снимаем флаг что запущено в первый раз
         }
     }
+    
 // Сортировка чек листов по названию(Хер его знает как работает....)
     func sortChecklists() {
         lists.sort({ checklist1, checklist2 in return
         checklist1.name.localizedStandardCompare(checklist2.name) ==
         NSComparisonResult.OrderedAscending })
     }
+    
 // Создание нового уникального ItemID
     class func nextChecklistItemID() -> Int {
         let userDefaults = NSUserDefaults.standardUserDefaults()

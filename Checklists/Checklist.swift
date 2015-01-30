@@ -26,6 +26,7 @@ class Checklist: NSObject, NSCoding {
         self.name = name
         self.iconName = iconName
         super.init()
+
     }
 // для восстановления объекта
     required init(coder aDecoder: NSCoder) {
@@ -51,6 +52,12 @@ class Checklist: NSObject, NSCoding {
         return count
     }
 
+// Сортировка чек листов по названию(Хер его знает как работает....2)
+    func sortChecklistItems() {
+        items.sort({checklistItem1 , checklistItem2 in return
+        checklistItem1.dueDate.compare(checklistItem2.dueDate) ==
+        NSComparisonResult.OrderedAscending })
+    }
     
    
 }
