@@ -114,6 +114,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, Icon
             // имя передается в свойство редактируемого/создаваемого чеклиста
             self.iconName = iconName
             iconImageView.image = UIImage(named: iconName)
+            doneBarButton.enabled = true
             navigationController?.popViewControllerAnimated(true)
     
     }

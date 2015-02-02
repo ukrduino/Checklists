@@ -52,7 +52,7 @@ class Checklist: NSObject, NSCoding {
         return count
     }
 
-// Сортировка чек листов по названию(Хер его знает как работает....2)
+// Сортировка  ChecklistItems по  dueDate(Хер его знает как работает....2)
     func sortChecklistItems() {
         items.sort({checklistItem1 , checklistItem2 in return
         checklistItem1.dueDate.compare(checklistItem2.dueDate) ==
